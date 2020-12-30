@@ -1,18 +1,17 @@
 package application;
 
-import Model.entities.Departamento;
-import Model.entities.Vendedor;
-import java.util.Date;
+import Model.DAO.Fabrica_dao;
+import Model.DAO.impl.Vendedor_dao_JDBC;
+import db.DB;
+import java.sql.Connection;
 
 public class DB_Projeto {
     public static void main(String[] args) {
         
-        Departamento dp = new Departamento(1, "Books");
+        Connection con = DB.getConnection();
         
-        Vendedor sl = new Vendedor(1, "Gabriel", "bessagabriel490@gmai.com", new Date(), 3000.00, dp);
-        
-        System.out.println(dp);
-        System.out.println(sl);
+        Vendedor_dao_JDBC vendedor = Fabrica_dao.createVendedorDao(con);
+        System.out.println(vendedor.findById(3));
     }
 
 }
