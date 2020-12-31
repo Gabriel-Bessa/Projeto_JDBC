@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import Model.DAO.Departamento_dao;
+import Model.entities.Vendedor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Departamento_dao_JDBC implements Departamento_dao {
 
@@ -116,7 +120,27 @@ public class Departamento_dao_JDBC implements Departamento_dao {
 
     @Override
     public List<Departamento> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("SELECT * FROM department");
+
+            rs = st.executeQuery();
+            List<Departamento> list = new ArrayList<>();
+
+            while (rs.next()) {
+                
+                Departamento dep = instaciarDepartamento(rs);
+                
+                list.add(dep);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new db.dbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
     
     private Departamento instaciarDepartamento(ResultSet rs) throws SQLException {

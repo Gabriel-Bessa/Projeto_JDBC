@@ -5,6 +5,7 @@ import Model.DAO.Fabrica_dao;
 import Model.entities.Departamento;
 import db.DB;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 public class DB_Projeto {
@@ -30,9 +31,14 @@ public class DB_Projeto {
         System.out.println("-- Teste 3 ---");
         Departamento teste = dep.findById(3);
         System.out.println(teste);
-        sc.close();
         
+        System.out.println("--- Teste 4 ---");
+        List<Departamento> list = dep.findAll();
+        for (Departamento departamento : list) {
+            System.out.println(departamento);
+        }
         
+        sc.close();       
     }
 
 }
