@@ -21,7 +21,14 @@ public class DB_Projeto {
         dep.insert(depart);
         System.out.println("ID: "  + depart.getId());
         System.out.println("Inserido com sucesso!");
+        
+        System.out.println("--- Teste 2 ---");
+        depart.setNome("Moda");
+        dep.update(depart);
+        
         sc.close();
+        
+        
     }
 
 }

@@ -27,7 +27,7 @@ public class Departamento_dao_JDBC implements Departamento_dao {
                     + "VALUES "
                     + "(?)", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, obj.getNome());
-            
+
             int rows = st.executeUpdate();
 
             if (rows > 0) {
@@ -50,7 +50,26 @@ public class Departamento_dao_JDBC implements Departamento_dao {
 
     @Override
     public void update(Departamento obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("UPDATE department "
+                    + "SET Name = ? "
+                    + "WHERE Id = ?", Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, obj.getNome());
+            st.setInt(2, obj.getId());
+
+            int rows = st.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Atualizado " + rows + " com sucesso!");
+            }else {
+                throw new db.dbException("Nenhuma Linha Atualizada!");
+            }
+
+        } catch (SQLException sql) {
+            throw new db.dbException(sql.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
