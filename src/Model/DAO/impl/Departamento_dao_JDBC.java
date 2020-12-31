@@ -74,17 +74,57 @@ public class Departamento_dao_JDBC implements Departamento_dao {
 
     @Override
     public void deleteById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("DELETE FROM department "
+                    + "WHERE Id = ?");
+            
+            st.setInt(1, id);            
+            st.executeUpdate();
+            
+        } catch (SQLException sql) {
+            throw new db.dbException(sql.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
     public Departamento findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("SELECT * FROM department "
+                    + "WHERE id = ?");
+            st.setInt(1, id);
+
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Departamento dp = instaciarDepartamento(rs);
+
+                return dp;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new db.dbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
 
     @Override
     public List<Departamento> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private Departamento instaciarDepartamento(ResultSet rs) throws SQLException {
+        Departamento dp = new Departamento();
+        dp.setId(rs.getInt("Id"));
+        dp.setNome(rs.getString("Name"));
+
+        return dp;
     }
 
 }

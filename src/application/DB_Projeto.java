@@ -26,6 +26,10 @@ public class DB_Projeto {
         depart.setNome("Moda");
         dep.update(depart);
         
+        
+        System.out.println("-- Teste 3 ---");
+        Departamento teste = dep.findById(3);
+        System.out.println(teste);
         sc.close();
         
         
