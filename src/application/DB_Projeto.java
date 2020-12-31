@@ -6,6 +6,7 @@ import Model.entities.Departamento;
 import Model.entities.Vendedor;
 import db.DB;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 public class DB_Projeto {
@@ -30,6 +31,11 @@ public class DB_Projeto {
         for (Vendedor v : listAll) {
             System.out.println(v);
         }
+        
+        System.out.println("--- Teste 4 ---");
+        Vendedor novovend = new Vendedor(null, "Greg", "Greg@gmail.com", new Date(), 2000.00, new Departamento(2, null));
+        vendedor_dao.insert(novovend);
+        System.out.println("Novo Vendedor! ID: " +novovend.getId());
     }
 
 }
