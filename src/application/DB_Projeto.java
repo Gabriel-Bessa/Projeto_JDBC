@@ -8,11 +8,13 @@ import db.DB;
 import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class DB_Projeto {
 
     public static void main(String[] args) {
-
+        
+        Scanner sc =new Scanner(System.in);
         Connection con = DB.getConnection();
 
         System.out.println("--- Teste 1 ---");
@@ -42,6 +44,14 @@ public class DB_Projeto {
         v3.setNome("Cristiano Ronaldo");
         vendedor_dao.update(v3);
         System.out.println("Atualizado");
+        
+        System.out.println("--- Teste 6 ---");
+        System.out.print("Entre com o ID para ser deletado: ");
+        int id = sc.nextInt();
+        vendedor_dao.deleteById(id);
+        System.out.println("Deletado com sucesso!");
+        
+        sc.close();
     }
 
 }

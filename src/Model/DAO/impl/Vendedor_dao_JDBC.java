@@ -81,7 +81,19 @@ public class Vendedor_dao_JDBC implements Vendedor_dao {
 
     @Override
     public void deleteById(Integer id) {
-
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("DELETE FROM seller "
+                    + "WHERE Id = ?");
+            
+            st.setInt(1, id);            
+            st.executeUpdate();
+            
+        } catch (SQLException sql) {
+            throw new db.dbException(sql.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
